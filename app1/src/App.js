@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 import { Colors, Header } from 'react-native/Libraries/NewAppScreen';
-import { ReanimatedComponent } from './ReanimatedComponent';
 
 const Section = ({ children, title }) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -51,8 +50,6 @@ export default function App() {
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <View style={backgroundStyle}>
-        <Header />
-        <ReanimatedComponent backgroundColor="blue" />
         <View
           style={{
             flex: 1,

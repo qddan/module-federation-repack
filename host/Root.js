@@ -1,9 +1,15 @@
 import * as React from 'react';
-import { AppRegistry, Text, Platform, View } from 'react-native';
+import {
+  AppRegistry,
+  Text,
+  Platform,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ChunkManager } from '@callstack/repack/client';
-import { ReanimatedComponent } from './ReanimatedComponent';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 ChunkManager.configure({
   forceRemoteChunkResolution: true,
@@ -94,17 +100,55 @@ function App3Wrapper() {
   );
 }
 
-const Tab = createBottomTabNavigator();
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('App1')}
+        style={styles.button}
+      >
+        <Text>App 1</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('App2')}
+        style={styles.button}
+      >
+        <Text>App 2</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('App3')}
+        style={styles.button}
+      >
+        <Text>App 3</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
 
 export function Root() {
   return (
     <NavigationContainer>
-      <ReanimatedComponent backgroundColor="red" />
-      <Tab.Navigator initialRouteName="App1">
-        <Tab.Screen name="App1" component={App1Wrapper} />
-        <Tab.Screen name="App2" component={App2Wrapper} />
-        <Tab.Screen name="App3" component={App3Wrapper} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="App1" component={App1Wrapper} />
+        <Stack.Screen name="App2" component={App2Wrapper} />
+        <Stack.Screen name="App3" component={App3Wrapper} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    width: 100,
+    height: 50,
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    margin: 10,
+  },
+});
